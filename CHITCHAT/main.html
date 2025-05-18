@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chit-Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff; /* Light baby blue background */
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .contacts {
+            width: 30%;
+            background-color: #ffffff; /* White background */
+            border-right: 2px solid #add8e6; /* Baby blue border */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .contacts h2 {
+            color: #4682b4; /* Steel blue for title */
+            margin-bottom: 20px;
+        }
+        .contacts ul {
+            list-style: none;
+            padding: 0;
+        }
+        .contacts ul li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #add8e6; /* Baby blue */
+            color: #ffffff; /* White text */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .contacts ul li:hover {
+            background-color: #87ceeb; /* Lighter blue on hover */
+        }
+        .message-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff; /* White background */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .message-box h2 {
+            color: #4682b4; /* Steel blue for title */
+            margin-bottom: 20px;
+        }
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #add8e6; /* Baby blue border */
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .input-box {
+            display: flex;
+        }
+        .input-box input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #add8e6; /* Baby blue border */
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .input-box button {
+            padding: 10px 20px;
+            background-color: #add8e6; /* Baby blue */
+            color: #ffffff; /* White text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .input-box button:hover {
+            background-color: #87ceeb; /* Lighter blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="contacts">
+            <h2>Contacts</h2>
+            <ul id="contactList">
+                <li data-contact="Group Chat">Group Chat</li>
+                <li data-contact="Malek K">Malek K</li>
+                <li data-contact="Malek">Malek</li>
+                <li data-contact="Omar">Omar</li>
+                <li data-contact="Ahmed">Ahmed</li>
+                <li data-contact="Temo">Temo</li>
+            </ul>
+        </div>
+        <div class="message-box">
+            <h2 id="chatTitle">Chit-Chat</h2>
+            <div class="messages" id="messages">
+                <!-- Messages will appear here -->
+            </div>
+            <div class="input-box">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactList = document.getElementById('contactList');
+            const chatTitle = document.getElementById('chatTitle');
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const messagesContainer = document.getElementById('messages');
+
+            // Object to store messages for each contact and group chat
+            const chats = { "Group Chat": [] };
+
+            // Handle contact click
+            contactList.addEventListener('click', (event) => {
+                if (event.target.tagName === 'LI') {
+                    const contactName = event.target.getAttribute('data-contact');
+                    chatTitle.textContent = `Chat with ${contactName}`;
+
+                    // Load messages for the selected contact or group chat
+                    messagesContainer.innerHTML = '';
+                    if (chats[contactName]) {
+                        chats[contactName].forEach(message => {
+                            const messageElement = document.createElement('div');
+                            messageElement.textContent = message;
+                            messageElement.style.padding = '10px';
+                            messageElement.style.marginBottom = '10px';
+                            messageElement.style.backgroundColor = '#add8e6'; // Baby blue background
+                            messageElement.style.color = '#ffffff'; // White text
+                            messageElement.style.borderRadius = '5px';
+                            messagesContainer.appendChild(messageElement);
+                        });
+                    }
+                }
+            });
+
+            // Handle sending messages
+            sendButton.addEventListener('click', () => {
+                const messageText = messageInput.value.trim();
+                const contactName = chatTitle.textContent.replace('Chat with ', '');
+                if (messageText && contactName) {
+                    // Save message to the contact's or group chat
+                    if (!chats[contactName]) {
+                        chats[contactName] = [];
+                    }
+                    chats[contactName].push(messageText);
+
+                    // Display the message
+                    const messageElement = document.createElement('div');
+                    messageElement.textContent = messageText;
+                    messageElement.style.padding = '10px';
+                    messageElement.style.marginBottom = '10px';
+                    messageElement.style.backgroundColor = '#add8e6'; // Baby blue background
+                    messageElement.style.color = '#ffffff'; // White text
+                    messageElement.style.borderRadius = '5px';
+                    messagesContainer.appendChild(messageElement);
+
+                    // Clear the input field and scroll to the bottom
+                    messageInput.value = '';
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            });
+
+            // Allow sending messages with Enter key
+            messageInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    sendButton.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

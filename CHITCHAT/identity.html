@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chit-Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #b3d9ff; /* Baby blue */
+            color: #ffffff; /* White */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+            color: #0073e6; /* Baby blue shade */
+        }
+        .container input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #0073e6;
+            border-radius: 5px;
+        }
+        .container button {
+            background-color: #0073e6;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chit-Chat</h1>
+        <form>
+            <input type="text" placeholder="Enter your ID" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
